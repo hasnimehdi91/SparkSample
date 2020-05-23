@@ -3,6 +3,7 @@ import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import scala.Tuple2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +23,10 @@ public class Test {
 
         JavaRDD<Double> rdd = context.parallelize(data);
 
-        rdd.collect().forEach(System.out::println);
+        JavaRDD<Tuple2<Double, Double>> rdd1 = rdd.map((x) -> new Tuple2<>(x, Math.sqrt(x)));
 
-        System.out.println("--------------------");
+        rdd1.foreach(doubleDoubleTuple2 -> System.out.println(doubleDoubleTuple2._1 + " " + doubleDoubleTuple2));
 
-        JavaRDD<Double> rdd1 = rdd.map((x)->Math.sqrt(x));
-
-        rdd1.collect().forEach(System.out::println);
         context.close();
 
     }
