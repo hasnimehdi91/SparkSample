@@ -1,12 +1,11 @@
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaPairRDD;
-import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import scala.Tuple2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Test {
@@ -26,6 +25,10 @@ public class Test {
                 .mapToPair(v -> new Tuple2<>(v.split(":")[0], 1L))
                 .reduceByKey((e, v) -> e + v)
                 .foreach(stringLongTuple2 -> System.out.println(stringLongTuple2._1 + ":" + stringLongTuple2._2));
+
+        context.parallelize(data)
+                .flatMap(v -> Arrays.asList(v.split(" ")).iterator())
+                .filter(v->v.contains(":")).foreach(x -> System.out.println(x));
 
         context.close();
 
