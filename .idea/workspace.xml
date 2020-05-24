@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59fea0be-9f1e-4df3-bc4d-5ea0e31cd119" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/data/input.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/data/input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data/input.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -46,8 +45,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="16" column="84" selection-start-line="16" selection-start-column="84" selection-end-line="16" selection-end-column="84" />
+            <state relative-caret-position="360">
+              <caret line="21" column="59" selection-start-line="21" selection-start-column="59" selection-end-line="21" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -58,8 +57,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/data/input.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3489">
-              <caret line="453" column="49" selection-start-line="453" selection-start-column="49" selection-end-line="453" selection-end-column="49" />
+            <state relative-caret-position="6514">
+              <caret line="836" column="39" lean-forward="true" selection-start-line="836" selection-start-column="39" selection-end-line="836" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -139,6 +138,21 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="SparekTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SparekTest" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SparekTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SparekTest" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -194,12 +208,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1590272966524</updated>
-      <workItem from="1590272969359" duration="9405000" />
+      <workItem from="1590272969359" duration="11026000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9405000" />
+    <option name="totallyTimeSpent" value="11026000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
@@ -272,15 +286,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/data/input.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3489">
-          <caret line="453" column="49" selection-start-line="453" selection-start-column="49" selection-end-line="453" selection-end-column="49" />
+        <state relative-caret-position="6514">
+          <caret line="836" column="39" lean-forward="true" selection-start-line="836" selection-start-column="39" selection-end-line="836" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="84" selection-start-line="16" selection-start-column="84" selection-end-line="16" selection-end-column="84" />
+        <state relative-caret-position="360">
+          <caret line="21" column="59" selection-start-line="21" selection-start-column="59" selection-end-line="21" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

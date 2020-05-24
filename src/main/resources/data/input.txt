@@ -452,3 +452,401 @@ Finally all of this is going to come together and we're going to do really usefu
 
 13:15.430 --> 13:18.400
 So have a good break and I'll see you for that's.
+
+WEBVTT
+
+00:00.330 --> 00:05.370
+Hello and welcome back in this chapter we're going to pull everything together that we've been learning
+
+00:05.370 --> 00:06.240
+so far.
+
+00:06.440 --> 00:13.100
+And we're going to do something formal like a realistic spark programming job.
+
+00:13.260 --> 00:20.640
+We're going to analyze some subtitle files and see if we can automatically generate keywords for virtual
+
+00:20.670 --> 00:23.090
+peer programs training courses.
+
+00:23.390 --> 00:31.260
+So in the previous chapter we learned how to load in a text file in practice from something like a Hadoop
+
+00:31.260 --> 00:35.960
+file system or possibly something like Amazon S3.
+
+00:36.180 --> 00:39.150
+But we've tested it with just the local file.
+
+00:39.230 --> 00:47.280
+I introduced to you in that chapter this input doc TXI the file inside the subtitles folder.
+
+00:47.490 --> 00:54.460
+And what we have in here is the subtitles file it happens to come from our docket training courses.
+
+00:54.650 --> 01:01.050
+It's from both of the courses and I've combined them all together into a single big file.
+
+01:01.410 --> 01:10.440
+And the challenge is we would like to be able to take the subtitles file from any of our courses and
+
+01:10.440 --> 01:18.790
+we would like to be able to generate automatically a set of 10 key words for that course and the keywords
+
+01:18.960 --> 01:24.330
+of course should reflect the major topics in that course.
+
+01:24.360 --> 01:30.450
+So what we're going to do in this chapter is I'm going to guide you through how you would do that using
+
+01:30.570 --> 01:38.400
+tools and techniques that we've already learnt if you one you could post the video now and have a try
+
+01:38.550 --> 01:41.740
+at implementing this challenge for yourself.
+
+01:42.060 --> 01:48.540
+However I don't want you to get stuck and get frustrated and think that you're not doing very well with
+
+01:48.540 --> 01:53.780
+SPARC because what we've done so far probably isn't quite enough.
+
+01:53.820 --> 01:59.730
+I've given you all of the fundamental tools such as fruit juice spikey how to do maps.
+
+01:59.730 --> 02:06.150
+Certainly the flat maps are going to be very useful for this exercise too but there will be a few thing
+
+02:06.180 --> 02:11.430
+there will be a few extra tools that you're going to need that we haven't yet covered if you want to
+
+02:11.430 --> 02:12.550
+try this for yourself.
+
+02:12.570 --> 02:19.520
+You can visit the Apache support page Sparke dot Apache dot org and on there you'll find a link.
+
+02:19.530 --> 02:25.740
+See the documentation for the latest release and the documentation is quite good.
+
+02:25.740 --> 02:31.320
+It gets a little bit mathematical in places and certainly assumes previous knowledge of working in these
+
+02:31.320 --> 02:33.240
+kinds of environments.
+
+02:33.360 --> 02:41.810
+But if you go further down you'll find where to go from here and I think the most useful page really
+
+02:41.810 --> 02:45.750
+for what we're doing at least is the RTD programming guide.
+
+02:46.950 --> 02:51.900
+And what I've got in here is to scroll down to a random example.
+
+02:51.900 --> 02:57.540
+So for example parallelize collection's is what we saw very early in the course where we can load in
+
+02:57.870 --> 03:01.830
+an existing collection in the driver program.
+
+03:01.860 --> 03:03.810
+Very good for testing.
+
+03:04.330 --> 03:07.590
+What they give you here is how to do it in Scala.
+
+03:07.950 --> 03:13.900
+But also while Python as well but here's how to do it in Java.
+
+03:13.930 --> 03:19.800
+Not exactly the kind of thing we've been doing early on in the course and you'll find there's a lot
+
+03:19.800 --> 03:23.330
+of good examples of how to do things in Java.
+
+03:23.490 --> 03:28.570
+Now they're covering that pretty much what we've covered so far on this course.
+
+03:28.610 --> 03:35.970
+Forgot about the top though I think the important thing I want to point towards is the section here
+
+03:36.300 --> 03:43.680
+and here and this is where they list all of the transformations and all of the actions that are available
+
+03:44.590 --> 03:53.190
+just to recall what we covered in a very early chapter transformations are where we are transforming
+
+03:53.200 --> 03:56.110
+and RTD from one form to another.
+
+03:56.550 --> 04:04.680
+Or rather we're telling Spock that we want the RTD to be transformed Spock will leisurely evaluate that
+
+04:04.680 --> 04:11.040
+transformation once we get to an action this it's worth bearing that in mind.
+
+04:11.040 --> 04:16.290
+But if I follow the link here here's a list of all of the transformations available.
+
+04:16.380 --> 04:20.560
+We've covered map we've covered filled so we've colored it flat map.
+
+04:20.670 --> 04:22.020
+Now we haven't covered everything.
+
+04:22.020 --> 04:26.470
+For example if I go a little further down we haven't covered salting.
+
+04:26.490 --> 04:33.990
+So now I reckon for processing subtitles and finding out what the most important words are we're probably
+
+04:33.990 --> 04:37.110
+going to need a sort of some description.
+
+04:37.650 --> 04:40.690
+So we will need to go in a little further down.
+
+04:40.710 --> 04:46.170
+There was some actions that we haven't used so far such as take.
+
+04:46.470 --> 04:52.470
+Now that's going to take an hour the day and it will return an array will be a regular Java collection
+
+04:52.470 --> 04:54.230
+in fights not an array.
+
+04:54.280 --> 05:01.800
+It will be a Java list I think and it will return the first and elements of the RTD.
+
+05:01.830 --> 05:06.360
+Now that's kind of very useful because we're going to get very big party days now and we don't really
+
+05:06.360 --> 05:08.640
+want to be printing everything to the console.
+
+05:08.640 --> 05:15.400
+So take is a very good way of just having a peek at some of the values in that of the day.
+
+05:15.480 --> 05:23.580
+Another useful operation is if I can find it on its sites directly underneath it's take a sample.
+
+05:23.700 --> 05:30.420
+Now it might not be very interesting to take the first 10 or 20 elements of NRD because that might be
+
+05:30.420 --> 05:32.770
+a clump of data in one particular form.
+
+05:32.820 --> 05:37.920
+But actually this interesting values scattered all the way through the RTD.
+
+05:37.920 --> 05:48.180
+So take samples useful one if we call take sample specifying say 10 elements then it will return 10
+
+05:48.270 --> 05:54.360
+random elements from that are the day the point of me showing you this is of course you should get used
+
+05:54.360 --> 05:57.420
+to using the Apache spot documentation.
+
+05:57.420 --> 06:04.050
+And if you do want to try this exercise for yourself then you will need documentation to fill in a few
+
+06:04.050 --> 06:10.140
+gaps but whether you do this by yourself or follow my walkthrough I need to give you a bit of advice
+
+06:10.140 --> 06:11.430
+on what we're actually doing.
+
+06:11.430 --> 06:17.310
+So you know that we have an input text file which is a set of subtitles.
+
+06:18.170 --> 06:20.490
+Lots of words basically.
+
+06:20.540 --> 06:26.110
+Now I suggest that the exercise here really is to do a word count.
+
+06:26.600 --> 06:35.630
+So somehow split this file up into words and count each unique word that appears in this file.
+
+06:35.630 --> 06:44.900
+I can see already for example that there's the word to here and it appears at least twice on this screenful
+
+06:45.020 --> 06:46.220
+of text.
+
+06:46.220 --> 06:51.110
+So we're going to camp out word in the results and it will have accounts of what it's going to be a
+
+06:51.110 --> 06:52.660
+massive number actually put.
+
+06:52.960 --> 06:58.850
+But just looking at this screenful I've probably missed some but it's going to be counted as appearing
+
+06:58.850 --> 07:01.040
+at least two times.
+
+07:01.130 --> 07:06.950
+That will give us a word count doing work counts is actually a very common activity and spark is often
+
+07:06.950 --> 07:13.250
+used as a hello world example actually but that I find that's a bit insulting to word counts because
+
+07:13.490 --> 07:20.090
+word counts are so important if you're doing any kind of lexical analysis then a word count really is
+
+07:20.090 --> 07:23.250
+one of your most important tools.
+
+07:23.570 --> 07:30.440
+But I suggest that's not very useful for this because just counting words in this file what we're going
+
+07:30.440 --> 07:38.450
+to end up with boring words that top are going to end up with words like the and and and two and probably
+
+07:38.450 --> 07:46.130
+words like courses as well not very interesting because that one's going to appear in every single virtual
+
+07:46.130 --> 07:48.130
+paper programmer's course.
+
+07:48.140 --> 07:53.720
+So it's not going to be a specific keyword for that course.
+
+07:53.780 --> 08:02.810
+So for that reason we have off camera built a file called boring words dot TXI and what's inside here
+
+08:02.810 --> 08:05.080
+is actually two things.
+
+08:05.090 --> 08:11.540
+First of all we've included in Heia just a list of the most common words in the English language.
+
+08:11.540 --> 08:20.790
+So you'll definitely find words like the and and and of and two and X and so on.
+
+08:21.050 --> 08:28.490
+But also what we've done is we've used Sparke to run through all of our subtitles for all of our courses
+
+08:28.580 --> 08:30.380
+all at once.
+
+08:30.470 --> 08:38.270
+We've generated a list of words that are commonly in every single course.
+
+08:38.360 --> 08:44.900
+So as an example I mentioned it before the word course would appear frequently in our courses and therefore
+
+08:44.960 --> 08:46.470
+it's not interesting.
+
+08:46.520 --> 08:54.740
+And because I always use words like terribly and I'm always complaining so I'm sure the word tedious
+
+08:54.740 --> 08:58.890
+will be appearing in here somewhere.
+
+08:59.210 --> 09:02.870
+Yeah there it is so we've automatically generated this file.
+
+09:02.870 --> 09:11.690
+We think these are words that you should be filtering out of your results in you having to load this
+
+09:11.690 --> 09:13.140
+file into memory.
+
+09:13.220 --> 09:16.360
+You don't need to do that because I've already done it for you.
+
+09:16.700 --> 09:20.080
+I provided a class called util dot Java.
+
+09:20.210 --> 09:26.260
+It's just a wrapper around that boring words fall so that you don't have to bother loading it into memory.
+
+09:26.270 --> 09:29.410
+There's just two methods in there at the moment but we could add more.
+
+09:29.630 --> 09:36.470
+One is called is boring and if you specify a word it will give you a true or false telling you whether
+
+09:36.590 --> 09:39.280
+we think that word is boring or not.
+
+09:39.390 --> 09:47.010
+And I've also provided just for more readable code I provided the inverse operation of that is not boring.
+
+09:47.130 --> 09:54.560
+Now you might be wondering why have I not loaded in this boring words T S T as a r d d.
+
+09:54.610 --> 10:01.100
+I absolutely could have done but the first reason is I think it would complicate the exercise and I
+
+10:01.100 --> 10:04.170
+want to make this exercise achievable.
+
+10:04.540 --> 10:09.980
+But the real reason is in real life if you think about it this boring words there aren't that many words
+
+10:09.980 --> 10:11.600
+in the English language.
+
+10:11.600 --> 10:17.570
+It's very difficult to know how many words there are in the English language but it's certainly of the
+
+10:17.570 --> 10:21.170
+old order of no more than a million or two.
+
+10:21.470 --> 10:25.300
+So I don't think this file is ever going to be that big.
+
+10:25.760 --> 10:32.510
+If I can just get the properties for the board and was Follet present it's about 89 K and this is actually
+
+10:32.510 --> 10:34.670
+a genuine it's not cut down.
+
+10:34.670 --> 10:38.500
+It's one that we do use and works well for his presence.
+
+10:38.510 --> 10:40.210
+Virtual pair programs.
+
+10:40.360 --> 10:44.460
+So my get bigger this file but it's no small.
+
+10:44.510 --> 10:49.050
+There's really no point in distributing it across an Ardeidae.
+
+10:49.190 --> 10:51.450
+So as mentioned in the comments here.
+
+10:51.590 --> 10:55.770
+This file will be loaded into the drivers JVM.
+
+10:56.030 --> 11:03.230
+And you know unless we feel the need to do otherwise it's fine just to leave it as a local text file.
+
+11:03.660 --> 11:05.780
+However the input file isn't.
+
+11:05.780 --> 11:08.130
+This is going to be a big massive file.
+
+11:08.240 --> 11:09.760
+So I think I've said enough.
+
+11:09.760 --> 11:14.150
+Now your challenge if you want to do this yourself is to have a go.
+
+11:14.150 --> 11:20.930
+Loading this file is when RTD get read of all the boring words counseller the words that are remaining
+
+11:21.470 --> 11:28.070
+and then find the 10 most frequently used it's entirely up to you if you have a go at this for yourself
+
+11:28.490 --> 11:35.760
+if you do and you get stuck Don't get frustrated you'll find a full walkthrough after this fade to black.
