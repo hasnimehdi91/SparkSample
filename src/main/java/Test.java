@@ -2,34 +2,20 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
-import scala.Tuple2;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Test {
     public static void main(String[] args) {
-        List<String> data = new ArrayList<>();
-        data.add("WARN: hello");
-        data.add("ERROR: hello");
-        data.add("ERROR: hello");
-        data.add("INFO: hello");
-        data.add("WARN: hello");
-
         Logger.getLogger("org.apache").setLevel(Level.OFF);
         SparkConf conf = new SparkConf().setAppName("TestCategorization").setMaster("local[*]");
         JavaSparkContext context = new JavaSparkContext(conf);
 
-        context.parallelize(data)
-                .mapToPair(v -> new Tuple2<>(v.split(":")[0], 1L))
-                .reduceByKey((e, v) -> e + v)
-                .foreach(stringLongTuple2 -> System.out.println(stringLongTuple2._1 + ":" + stringLongTuple2._2));
-
-        context.parallelize(data)
-                .flatMap(v -> Arrays.asList(v.split(" ")).iterator())
-                .filter(v->v.contains(":")).foreach(x -> System.out.println(x));
-
+        context.textFile("src/main/resources/data/input.txt")
+                .flatMap(x -> Arrays.asList(x.split(" ")).iterator())
+                .filter(x -> x.length() > 1 && !x.equals("-->") && !x.matches("[0-9]{2}:[0-9]{2}.[0-9]{3}"))
+                .map(v -> v.replace(".", "").replace("'", "").replaceAll("[0-9]{1,10}",""))
+                .foreach(x -> System.out.println(x));
         context.close();
 
     }

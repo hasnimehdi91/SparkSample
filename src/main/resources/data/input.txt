@@ -1,0 +1,454 @@
+WEBVTT
+
+00:00.390 --> 00:08.580
+In this very short chapter I'm going to show you how to text files NCR Apache spark jumps so far on
+
+00:08.580 --> 00:14.370
+the course we've been working with hard coded data in the form of a Java collection.
+
+00:14.370 --> 00:16.100
+Now this is a very good way of working.
+
+00:16.230 --> 00:23.130
+It means you can concentrate on getting the structure of your spark transformations and actions correct
+
+00:23.550 --> 00:28.530
+before you start worrying about external data files and so on.
+
+00:28.890 --> 00:30.920
+So this is great book.
+
+00:30.930 --> 00:36.400
+Before long of course we are going to want to start working on some real test data.
+
+00:36.520 --> 00:40.130
+And in fact it's very simple to load an external file.
+
+00:40.260 --> 00:46.080
+But the reason why I've given this chapter on its own is you will have a small problem if you're working
+
+00:46.080 --> 00:47.630
+on Windows.
+
+00:47.670 --> 00:49.410
+So allow me to demonstrate.
+
+00:49.680 --> 00:52.930
+Let's change our code that we've written so far.
+
+00:53.050 --> 01:02.250
+I'm going to start working with this hardcoded in memory collection so we can remove all the lines where
+
+01:02.250 --> 01:05.030
+we're setting up this input data
+
+01:07.470 --> 01:11.040
+instead after we've created the Java's Vok context.
+
+01:11.040 --> 01:13.340
+I would like to load it in the day.
+
+01:13.860 --> 01:17.980
+And I'd like to initialize it using the data inside a text file.
+
+01:18.180 --> 01:19.320
+Well it's very simple.
+
+01:19.320 --> 01:26.070
+So we'll be having a new party and because we're waiting in a text file we are they will be of type
+
+01:26.070 --> 01:37.350
+string and I'll call this the initial audio D and it's a simple case of on the spark Context object.
+
+01:37.500 --> 01:44.970
+You will find in there a method called text file and we simply supply a path to that file.
+
+01:45.000 --> 01:53.520
+Now almost certainly if you're doing this in production on a real big data sets this will not be a local
+
+01:53.520 --> 01:59.870
+text file that you have on this machine because of course the input data.
+
+02:00.120 --> 02:06.170
+If it's big data it's going to be too big to fix on a single machine's desk.
+
+02:06.590 --> 02:13.920
+For that reason often when we work with this text file method we're going to be pointing to some kind
+
+02:13.920 --> 02:23.950
+of a distributed file system so we can perfectly well in here supply for example path to Amazon S3.
+
+02:24.000 --> 02:31.160
+That's Amazon's distributes file storage system and on there the files can be any size you like.
+
+02:31.470 --> 02:38.480
+All this could be a path to a huge DFS file that's using the Hadoop file system.
+
+02:39.030 --> 02:45.240
+And what will happen when we load in one of these big files is very important to realize it does not
+
+02:45.300 --> 02:48.430
+load that text file into memory.
+
+02:48.450 --> 02:55.290
+In this virtual machine otherwise of course we would have an ounce of memory exception immediately.
+
+02:55.350 --> 03:02.960
+Instead what the driver will do is tell the notes in the cluster to load in part so partitions as we've
+
+03:02.970 --> 03:11.940
+seen partitions of this file and all of that is contained inside the logic of textfile.
+
+03:12.000 --> 03:19.830
+So it's really sort of beguilingly simple almost in the tools just writing a test program here it is
+
+03:19.830 --> 03:23.190
+going to feel just like load loading in a normal file.
+
+03:23.340 --> 03:29.280
+But when we scale up to production it's just really a case of switching the location of that text file
+
+03:29.610 --> 03:33.360
+and it will just work now because we're still developing.
+
+03:33.360 --> 03:35.960
+We're still keeping things simple.
+
+03:35.970 --> 03:39.090
+We're certainly not going to be using S3 now.
+
+03:39.360 --> 03:45.420
+Instead we're just going to use a local file inside our developments and Parliament and have supplied
+
+03:45.420 --> 03:53.000
+for you inside source main resources a collection of folders with some different pieces of testators
+
+03:53.040 --> 03:57.690
+that we'll be using throughout the course but in the next chapter we're going to be working in this
+
+03:57.690 --> 04:00.430
+folder called subtitles.
+
+04:00.690 --> 04:09.740
+So I suggest that we have a go at loading in this file called input adoptee XTi from the subtitles folder.
+
+04:09.750 --> 04:17.100
+Now a quick way of doing this now stress this will not work when we go to a production clustered environment
+
+04:17.760 --> 04:19.140
+but it will work for now.
+
+04:19.140 --> 04:22.040
+So we're just going to do the simplest thing that could work.
+
+04:22.050 --> 04:29.940
+So a quick way of referencing this file is to go as Saussy for slushed main forward slash resources
+
+04:30.600 --> 04:35.130
+and then we have inside a folder called subtitles.
+
+04:38.550 --> 04:45.610
+And then the file is called in it's got 60 and so that is going to load in that file and that's going
+
+04:45.610 --> 04:51.470
+to split the file up into partitions which will be represented by this new RTD.
+
+04:51.580 --> 04:56.260
+By the way I have not shown you the structure of this input data so let's have a look at.
+
+04:56.260 --> 05:02.480
+That's what we have here in fact is a subtitles file from virtual pair programmers.
+
+05:02.500 --> 05:10.030
+It's from our Daka course and it's every single chance on the two daku courses in five.
+
+05:10.030 --> 05:11.850
+So it's quite a big file.
+
+05:11.860 --> 05:14.970
+It certainly doesn't qualify as big data.
+
+05:14.980 --> 05:21.700
+There's about 40 odd thousand lines in there so it's not massive but it's certainly going to give us
+
+05:21.700 --> 05:24.370
+something interesting to work on.
+
+05:24.370 --> 05:28.560
+Now I'm going to get you to do some really interesting processing on that in the next chapter.
+
+05:28.570 --> 05:35.350
+But for now I just want to know if it loads in on us what we can do is get this code compiling First
+
+05:35.350 --> 05:44.320
+of all we will need to import the Java arti and we can use this initial RTT as the input to this processing
+
+05:44.320 --> 05:45.820
+that we had before.
+
+05:46.030 --> 05:54.340
+We just need to remove the C parallelize because that just works with hard coded in memory collections
+
+05:55.140 --> 06:00.520
+and allness initial RTT we can do the flat mapping to get the individual words.
+
+06:00.700 --> 06:02.470
+I'm not sure the fields is relevant.
+
+06:02.470 --> 06:09.850
+Let's remove that line so we're just going to get out each individual word from that subtitles file
+
+06:10.120 --> 06:12.550
+and then we'll print each one out.
+
+06:12.550 --> 06:19.060
+All I'm interested in this chapter is does the loading of the text file work before on this.
+
+06:19.060 --> 06:24.500
+I've had a few problems writing this because I kept getting typos in this base path.
+
+06:24.510 --> 06:29.980
+I must have rerecorded this video about eight times now so I'm getting a bit fed up to be honest but
+
+06:30.430 --> 06:34.870
+I want to demonstrate that if I break it completely like that.
+
+06:34.870 --> 06:39.740
+Of course what's going to happen is the code will crash.
+
+06:40.000 --> 06:49.360
+Obviously So there's an exception and clearly nothing's going to happen because as the exception hearsays
+
+06:49.690 --> 06:53.890
+the input path does not exist quite naturally.
+
+06:54.160 --> 06:56.640
+But you must be a little put off or go a little further up.
+
+06:56.650 --> 06:59.610
+Now this is only relevant for Windows users.
+
+06:59.830 --> 07:06.400
+You will also see that it says it cannot load this executable code when you tildes dot X say.
+
+07:06.490 --> 07:09.840
+Now Actually that's not a problem.
+
+07:09.880 --> 07:17.410
+The problem is of course the fact that the input path didn't say exist and we can fix that very simply
+
+07:17.980 --> 07:21.090
+by doing it correctly.
+
+07:21.220 --> 07:29.170
+So make sure this reads source main resources subtitles input dot cx t.
+
+07:29.320 --> 07:33.500
+Simple Thing manage to get it wrong many times.
+
+07:33.700 --> 07:42.290
+Now if that's correct you should find I'm not going to do any editing here because I'm on Windows and
+
+07:42.290 --> 07:43.970
+this is going to be a little bit odd.
+
+07:48.070 --> 07:53.370
+Now I don't know if you saw that but it was definitely an exception flashing past.
+
+07:53.680 --> 07:59.860
+But even though there was an exception flashing past can you see that the mapping does appear to have
+
+07:59.860 --> 08:00.900
+worked.
+
+08:01.180 --> 08:09.490
+I've got certainly very dirty data this isn't sort of useful at all but we've got on each line it's
+
+08:09.490 --> 08:15.490
+the input data that's been split up the spaces so that looks good.
+
+08:15.490 --> 08:23.070
+And actually if I scroll all the way to the top it looks like I run out of office space so I can't actually
+
+08:23.070 --> 08:27.060
+see that exception of pay or think I can fix that.
+
+08:27.060 --> 08:37.550
+I think by right clicking here on the Eclipse console the select preferences and go full and take there's
+
+08:37.600 --> 08:43.830
+a limit console output going to be a bit careful with this because if you really are running some big
+
+08:43.830 --> 08:47.320
+data operation you can very easily run out of.
+
+08:47.730 --> 08:52.860
+You can cause an out of memory exception should be OK for this though if I run again I just want to
+
+08:52.860 --> 08:54.360
+catch that exception.
+
+08:54.420 --> 08:55.530
+What was its
+
+09:01.090 --> 09:01.590
+soy.
+
+09:01.630 --> 09:03.820
+And this one for go all the way to the top.
+
+09:04.060 --> 09:09.010
+Yeah it's still saying it cannot load this executable.
+
+09:09.080 --> 09:10.880
+When utils.
+
+09:11.140 --> 09:15.100
+But even though that exception happened it then carried on.
+
+09:15.250 --> 09:17.980
+And it ran absolutely fine.
+
+09:18.130 --> 09:23.620
+Now will only happen if you're on Windows if you're not on Windows then you can safely end this chapter
+
+09:23.620 --> 09:27.850
+now and you can go forward to the exciting next chapter.
+
+09:27.850 --> 09:31.160
+But if you are on Windows This will probably concern you.
+
+09:31.210 --> 09:38.050
+Now all that's happening is because the text file does support a Hadoop page the first page DFS file
+
+09:38.050 --> 09:39.030
+system.
+
+09:39.220 --> 09:45.490
+There is some code in the implementation of textfile which is looking for the presence of a dope on
+
+09:45.490 --> 09:47.020
+our system.
+
+09:47.050 --> 09:50.530
+Now a dope doesn't exist as Beiner is for Windows.
+
+09:50.530 --> 09:57.070
+So it's not finding it it doesn't matter because we're not using Hadoop at all.
+
+09:57.100 --> 10:02.270
+And as you can see from this the exception does not cause the program to crash.
+
+10:02.350 --> 10:04.240
+It does continue.
+
+10:04.570 --> 10:07.620
+However this exception is going to be very annoying.
+
+10:07.870 --> 10:15.070
+So there is a way of getting rid of this and that is as kind of hinted here there is a program available
+
+10:15.070 --> 10:21.750
+an executable called when utils start the X-C which is kind of a Windows compilation of the Hadoop binary
+
+10:21.780 --> 10:27.970
+is and it will at least give us the minimum amount of dependencies on your windows and violence will
+
+10:27.970 --> 10:31.810
+allow you to run this program without an error appearing.
+
+10:32.050 --> 10:34.080
+You can get this when you teals the SC.
+
+10:34.090 --> 10:39.010
+From this get a repository here which is run by Steve Lokeren.
+
+10:39.010 --> 10:42.980
+Now this person is a little further down.
+
+10:43.030 --> 10:50.020
+They assure us that they are a Hadoop committee so there are parts of the Hadoop projects and they do
+
+10:50.020 --> 10:56.800
+this as kind of a courtesy to the community and you can download that executable file from here and
+
+10:56.830 --> 11:00.160
+place that in your Windows environment.
+
+11:00.190 --> 11:05.500
+You dont have to do that because weve already downloaded this file for you and you'll find it in the
+
+11:05.700 --> 11:13.860
+schools and code fold under the wynot you tildes dush extra folder inside there is a folder called Hadoop.
+
+11:14.140 --> 11:16.470
+Inside there is a folder called Ben.
+
+11:16.930 --> 11:24.290
+And then when you stop X-C and its just a 106 case its not a very big file.
+
+11:24.460 --> 11:30.830
+Now we need to do is copy that Hadoop folder to somewhere on your C drive.
+
+11:30.870 --> 11:33.030
+I suggest actually for simplicity.
+
+11:33.050 --> 11:34.930
+In fact I've already done it for me.
+
+11:35.050 --> 11:41.470
+I've just put it in the roots of my C drive right there so that's not a full Hadoop.
+
+11:41.560 --> 11:48.610
+It's just this when you tells them what we're expected to do is to set up an environment variable pointing
+
+11:48.610 --> 11:50.240
+to that folder.
+
+11:50.260 --> 11:57.130
+I think it's a bit awkward having to go into windows and changing your entire environment for this when
+
+11:57.580 --> 12:04.210
+it's much easier just at the top of your program here we can set up that environment variable by calling
+
+12:04.210 --> 12:10.180
+system docs set property on the property.
+
+12:10.180 --> 12:16.220
+The key here is a dupe dot dot dial.
+
+12:16.420 --> 12:23.080
+And then for the value this is going to be the full path to that folder you've just created.
+
+12:23.080 --> 12:28.290
+If you followed along with me then it's just going to be Seacole on and you can use a forward slashing
+
+12:28.300 --> 12:31.950
+Java that will map to the backslash.
+
+12:32.170 --> 12:37.420
+It's easy to do it this way Seacole on forward slash dupe.
+
+12:37.510 --> 12:40.570
+And with that same place if we run again
+
+12:46.570 --> 12:50.700
+you should now see the program running with no nasty exceptions.
+
+12:50.700 --> 12:54.930
+So we've still got these warning but that's not the problem.
+
+12:54.940 --> 13:01.240
+So loading in textfiles files from a massive distributed file system is quite straightforward in SPARC.
+
+13:01.330 --> 13:05.410
+There's just one nasty little windows problem which is why I've given it a chance run it.
+
+13:05.410 --> 13:08.650
+So hopefully it's working for you in the next chapter.
+
+13:08.650 --> 13:15.310
+Finally all of this is going to come together and we're going to do really useful Sparke job.
+
+13:15.430 --> 13:18.400
+So have a good break and I'll see you for that's.
