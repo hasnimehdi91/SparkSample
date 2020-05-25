@@ -1,6 +1,8 @@
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import scala.Tuple2;
 
@@ -24,7 +26,7 @@ public class Exercices {
         course.add(new Tuple2<>(97, 1));
         course.add(new Tuple2<>(98, 1));
         course.add(new Tuple2<>(99, 1));
-        course.add(new Tuple2<>(100, 2));
+        course.add(new Tuple2<>(100, 3));
         course.add(new Tuple2<>(101, 3));
         course.add(new Tuple2<>(101, 3));
         course.add(new Tuple2<>(102, 3));
@@ -42,7 +44,9 @@ public class Exercices {
 
         context.parallelize(course)
                 .mapToPair(v -> new Tuple2<>(v._2, 1L))
-                .reduceByKey((v, e) -> e + v).foreach(e-> System.out.println(e));
+                .reduceByKey((v, e) -> e + v).foreach(e -> System.out.println(e));
+
+        context.close();
 
     }
 }

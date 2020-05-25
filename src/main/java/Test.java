@@ -5,6 +5,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import scala.Tuple2;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class Test {
     public static void main(String[] args) {
@@ -20,8 +21,11 @@ public class Test {
                 .reduceByKey((e, v) -> e + v)
                 .mapToPair(v -> new Tuple2<>(v._2, v._1))
                 .filter(v -> v._1 > 10 && v._2.length() > 5)
-                .sortByKey(true).take(10);
+                .sortByKey(true).cache().take(1000);
         all.forEach(x -> System.out.println(x._2 + ": " + x._1));
+
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
         context.close();
 
     }
