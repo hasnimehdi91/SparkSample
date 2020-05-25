@@ -850,3 +850,1095 @@ and then find the 10 most frequently used it's entirely up to you if you have a 
 
 11:28.490 --> 11:35.760
 if you do and you get stuck Don't get frustrated you'll find a full walkthrough after this fade to black.
+WEBVTT
+
+00:00.510 --> 00:08.060
+Now it's time to run our Sparke application on a real hardware cluster using Amazon.
+
+00:08.120 --> 00:15.990
+We are in this chat if you want to do the practical exercise along with me then I'm going to assume
+
+00:15.990 --> 00:24.450
+that you already have an account with Amazon AWOS and that you're familiar with a double U.S. If you
+
+00:24.450 --> 00:28.760
+don't have an account with Amazon Web Services then please don't worry.
+
+00:28.890 --> 00:35.460
+You do not need to do this chapter to carry on with the rest of the course but I would recommend that
+
+00:35.460 --> 00:41.730
+you watch the video anyway because there's going to be some useful insights to spark in this chapter
+
+00:41.940 --> 00:48.330
+and it will be good for you to get a feel for what Amazon Web Services can do for you and you'll be
+
+00:48.330 --> 00:55.290
+amazed really at how easy it is to set up a real life complicated spot cluster with just a few mouse
+
+00:55.290 --> 00:56.580
+clicks.
+
+00:56.580 --> 01:02.040
+There are of course a lot of courses available on you to me that cover the basics of Amazon Web Services
+
+01:02.160 --> 01:08.370
+so you could certainly pick up a good tutorial on how to get yourself an account it AWOS and pretty
+
+01:08.370 --> 01:10.930
+quickly pick up the basics from there.
+
+01:11.010 --> 01:17.640
+You do need to know what you're doing with AWOS because everything that we do in this chapter is going
+
+01:17.640 --> 01:20.010
+to incur costs.
+
+01:20.220 --> 01:28.410
+And if you fail to delete and terminate any of the resources that we use in this chapter you will be
+
+01:28.410 --> 01:32.520
+billed and I am not going to be held responsible for that.
+
+01:32.520 --> 01:36.180
+This is entirely your responsibility.
+
+01:36.180 --> 01:41.600
+In particular when working with clusters they can be particularly expensive.
+
+01:42.060 --> 01:48.450
+So the object of the exercise of this exercise then is to deploy our key word accounting application
+
+01:48.870 --> 01:51.080
+to live hardware.
+
+01:51.090 --> 01:57.780
+Now I'm only using Amazon AWOS because that's what I'm familiar with and it's what we use our virtual
+
+01:57.780 --> 02:02.640
+pair programs behind the scenes for our hardware infrastructure.
+
+02:02.640 --> 02:08.640
+And you have a lot of options as to how you deploy your SPARC jobs but basically what you need is some
+
+02:08.640 --> 02:11.590
+kind of a cluster manager.
+
+02:11.830 --> 02:17.130
+Now SPARC supports the doop cluster manager.
+
+02:17.280 --> 02:22.410
+So you might be familiar with Hadoop and you might have even done a training course virtual pair programs
+
+02:22.410 --> 02:31.140
+on Hadoop and you'll know from that calls that Hadoop is not just map Ridgeway's do is a kind of a collection
+
+02:31.140 --> 02:34.520
+of two ways one of which is map reduce.
+
+02:34.800 --> 02:42.000
+But there's also the hate DFS file system as part of Hadoop and there is also a cluster manager called
+
+02:42.090 --> 02:43.930
+yorn.
+
+02:43.950 --> 02:45.980
+Now what we can do with SPARC.
+
+02:46.050 --> 02:56.160
+Well we don't need Hadoop MacT reduce but with SPARC we can deploy SPARC to a dupe cluster maybe using
+
+02:56.160 --> 03:03.680
+hate DFS but we can also take advantage of the yaun cluster manager.
+
+03:03.720 --> 03:10.230
+So if you're setting up a cluster by hand then basically you could set up a cluster in the same way
+
+03:10.230 --> 03:12.790
+that you would set up a Hadoop cluster.
+
+03:12.840 --> 03:20.760
+You could also use the existing Anable U.S. service called E M R which is on their list of services
+
+03:20.910 --> 03:29.610
+Heia EMR stands for elastic map rejects and it's basically Amundsen's implementation of Hadoop in the
+
+03:29.610 --> 03:30.930
+cloud.
+
+03:30.930 --> 03:39.420
+So as I say we don't need the Hadoop map bridges but we can take advantage of these Amerson email clusters
+
+03:39.690 --> 03:43.910
+to run our SPARC jobs and you know it's not true.
+
+03:43.910 --> 03:47.190
+It is not too difficult to set up a cluster.
+
+03:47.340 --> 03:53.790
+So as I keep saying either just watch the video and enjoy having a good relax or if you're following
+
+03:53.790 --> 03:56.730
+along or seem you already have an account.
+
+03:56.970 --> 04:02.190
+So what we want to do is create a cluster so we can hit the button here.
+
+04:02.280 --> 04:05.490
+So you'll need to give your cluster a name.
+
+04:05.490 --> 04:11.720
+So this is going to be my video demonstration cluster.
+
+04:11.730 --> 04:15.530
+Now we're not going to need any logging so we can take this box here.
+
+04:15.720 --> 04:21.090
+But if you did leave it take then some logs would be written to an S-3 folder.
+
+04:21.090 --> 04:26.580
+I'm only suggesting that we unstick this because you're going to be charged for this for this storage
+
+04:26.590 --> 04:30.750
+it will be a small amount but it will be an amount not less.
+
+04:30.840 --> 04:33.360
+And I guess it will be quite easy to forget to delete that.
+
+04:33.360 --> 04:35.410
+So let's take that.
+
+04:35.820 --> 04:38.130
+Now there's two options for launch mode.
+
+04:38.310 --> 04:43.980
+If we launch a cluster then what we're going to end up with is basically a set of Amma's and easy to
+
+04:43.980 --> 04:52.800
+instances that we can log onto and we can control programmatically which is kind of full control of
+
+04:52.800 --> 04:57.120
+the cluster with step execution.
+
+04:57.120 --> 05:05.080
+We can configure things so that the cluster stop up exit keeps a job or a series of jobs and then the
+
+05:05.080 --> 05:12.220
+cluster will automatically terminate which is very useful if you've got a tried and tested job and you
+
+05:12.220 --> 05:18.210
+want to kind of configure it to run every Monday evening or something.
+
+05:18.550 --> 05:24.940
+Now I recommend we don't go for stepup execution even if there's a problem with your code and we are
+
+05:24.940 --> 05:30.820
+going to have to the Bulga code then the entire cost will shut down and you've got to start the whole
+
+05:30.820 --> 05:33.920
+cluster up again and that takes ages.
+
+05:34.210 --> 05:40.570
+So although it's handy step execution and it certainly stops you forgetting to terminate the cluster
+
+05:41.050 --> 05:49.090
+or recommend we go with this cluster option now under Applications here we're going to select Sparc
+
+05:49.180 --> 05:56.080
+and that will give us a preconfigured cluster with a dupe yaun the cluster manager as I mentioned before
+
+05:56.650 --> 06:03.500
+a couple of other things but importantly also spark for me it's Simon recording to point to point one
+
+06:03.870 --> 06:07.900
+and going a little further down we can choose the instance type.
+
+06:07.900 --> 06:15.280
+Now all we're getting here are regular ACTC instances and if you pull up the list this will be different
+
+06:15.430 --> 06:18.190
+potentially by the time you watch the video.
+
+06:18.270 --> 06:24.820
+What you should be familiar with these types of instances if you've done any work on the to now there
+
+06:24.820 --> 06:34.510
+are some instances here which are incredibly powerful instances which just the C4 8 X launch.
+
+06:34.530 --> 06:36.520
+They are powerful but they're also expensive.
+
+06:36.520 --> 06:41.150
+They cost about $1 50 per hour to run.
+
+06:41.190 --> 06:46.490
+We're going to have multiple instances in our cluster of course so the cost of that can really rack
+
+06:46.490 --> 06:54.250
+up severely so I recommend to any testing I would avoid any of those expensive instance types.
+
+06:54.280 --> 06:58.520
+Now I don't just mean I don't use all of these instance types.
+
+06:58.750 --> 07:06.430
+I think probably for the course we want to use the cheapest possible which surprisingly actually there
+
+07:06.430 --> 07:13.060
+is still the one medium available which is a very old instance type from years ago.
+
+07:13.380 --> 07:18.990
+It says there is previous generation notice going to the current generation.
+
+07:19.000 --> 07:22.400
+There aren't any actual mediums supported anymore.
+
+07:22.930 --> 07:28.150
+But the reason for that is probably just that these instances are getting cheaper over time with successive
+
+07:28.150 --> 07:37.580
+generations and I notice that the median time of recording costs about eight point seven cents per hour
+
+07:38.350 --> 07:43.410
+or not point north a $7 per hour which is pretty cheap.
+
+07:43.420 --> 07:54.610
+But actually again time of recording caveats you can get hold of a C4 large for about the same price
+
+07:54.610 --> 07:56.810
+that's 10 cents per hour.
+
+07:56.930 --> 07:59.360
+That's a fairly powerful instance.
+
+07:59.680 --> 08:06.050
+As always you'll need to check the Amazon easy to pricing page for the current up to date prices.
+
+08:07.490 --> 08:17.670
+Just to follow the link to on pricing here and just to give you some ideas as I mentioned the C for
+
+08:17.670 --> 08:29.690
+large is 10 cents per hour per hour time of recording I see for 8 x large which is very very powerful
+
+08:29.690 --> 08:31.220
+and very very fast.
+
+08:31.260 --> 08:41.910
+Wandle a 51 per hour of the mediums The looks like the smallest available are the end 3 x large and
+
+08:41.910 --> 08:46.470
+the end for x large pricing of those.
+
+08:46.680 --> 08:54.140
+They don't have the N3 on this table but the M4 x large again some of recoding 20 cents per hour.
+
+08:54.270 --> 08:57.880
+So quite a bit more expensive than the C for.
+
+08:57.990 --> 09:02.940
+There's a link further down the page to the previous generation instances.
+
+09:02.940 --> 09:13.020
+It looks like the made the M 3 x large has been moved into the legacy generations in fact that was quite
+
+09:13.020 --> 09:16.670
+expensive that was 26 cents per hour.
+
+09:16.860 --> 09:21.690
+Well I won't go on too long about the pricing but I want to give you a feel for the range of instances
+
+09:21.690 --> 09:24.750
+available and this will change over time.
+
+09:25.200 --> 09:30.420
+I think just to be absolutely safe on the course going to go for what is actually a rubbish choice in
+
+09:30.420 --> 09:36.470
+real life which will be the end one medium which is just fractionally the cheapest.
+
+09:36.570 --> 09:38.630
+It's not very powerful at all.
+
+09:38.630 --> 09:48.690
+It basically has just a single C-p you will think for cause and it yeah it is definitely a sluggish
+
+09:48.770 --> 09:52.510
+performable but we're not going to be running a big job on it.
+
+09:52.560 --> 09:57.690
+I'm going to start three instances which will give us one master that's going to be the driver and there
+
+09:57.690 --> 10:03.290
+will be two core nodes that they're going to be the execute all the executives.
+
+10:03.330 --> 10:06.450
+Now again I'm assuming you know what you're doing here.
+
+10:06.450 --> 10:08.980
+You will need an easy to key pair.
+
+10:09.030 --> 10:13.360
+I'm just going to use one of my old key pairs that I use for demonstrations.
+
+10:13.380 --> 10:22.050
+So then you can leave the permissions set to the faults and you should now just be able to create cluster.
+
+10:22.050 --> 10:28.470
+Now I will warn you that especially with those mediums this can take a long time because it's it's going
+
+10:28.470 --> 10:34.420
+to instantiate those instances but it also does things like patching them up with the latest updates
+
+10:34.950 --> 10:40.640
+and it will also configure Hadoop and it's going to configure SPARC.
+
+10:40.770 --> 10:45.690
+So expect that to take if you're using the on one medium it will be something of the region of about
+
+10:45.690 --> 10:47.310
+15 minutes.
+
+10:47.380 --> 10:51.960
+OK well lackluster starting I'll just wrap this video up and we'll carry on in the next video.
+
+10:51.960 --> 10:58.950
+But I just want to remind you that if for any reason you decide to stop doing the work on this chapter
+
+10:59.340 --> 11:03.460
+you must remember to stop or delete your cluster.
+
+11:03.750 --> 11:10.320
+If you don't then you might find yourself with a very expensive bill from Amazon and I cannot be held
+
+11:10.320 --> 11:12.040
+responsible for that.
+
+11:12.060 --> 11:15.660
+Always delete a cluster before you finish your session.
+WEBVTT
+
+00:00.270 --> 00:07.410
+So while that's going let's look at what else we need to do with guns and a need to make a few small
+
+00:07.410 --> 00:14.830
+changes to our code so reminding ourselves of the code we have at this keyword ranking program.
+
+00:15.180 --> 00:19.530
+And I was fiddling around with it a little bit in the last chapter that demonstrates sorting but I've
+
+00:19.530 --> 00:25.290
+returned it by now to the state where we sought my key take the top 10 results and then print them out
+
+00:25.290 --> 00:31.850
+to the console and that's working locally absolutely fine.
+
+00:32.160 --> 00:34.250
+But we have a couple of problems.
+
+00:34.300 --> 00:37.720
+And the first one is quite simple line 24.
+
+00:37.940 --> 00:40.180
+We're calling this set Master.
+
+00:40.260 --> 00:44.160
+We're basically configuring Hadoop here to run in local mode.
+
+00:44.160 --> 00:51.030
+And the asterisk is saying run this as a local multi-threaded program using as many threads as there
+
+00:51.030 --> 00:55.090
+are available calls on the underlying hardware.
+
+00:55.110 --> 01:01.290
+So that's been great so far we've been getting a lovely multi-threaded local application but that will
+
+01:01.290 --> 01:07.200
+be a disaster if we leave this in place when we deploy to a cluster because this would make it run just
+
+01:07.200 --> 01:12.700
+on the driver and our executive nodes are going to be sat there doing nothing.
+
+01:13.110 --> 01:21.630
+So there's nothing complicates to do really other than just remove the dot set M. local when we're deploying
+
+01:21.630 --> 01:23.150
+to a cluster.
+
+01:23.160 --> 01:29.970
+Now the other problem is that the text file here which I've been reading from a local resources file.
+
+01:30.090 --> 01:33.430
+Well that's not going to be available on our cluster.
+
+01:33.790 --> 01:34.130
+OK.
+
+01:34.140 --> 01:40.720
+We're just testing which is developing here this is actually a very small manageable file for now.
+
+01:40.920 --> 01:48.000
+So I could I guess copy that file across to the cluster and have it as a local file just like we've
+
+01:48.000 --> 01:56.220
+been doing it development's book actually turns out to be a surprisingly painful thing to do that because
+
+01:56.220 --> 02:02.640
+this textfile operation this text file operation really doesn't work very well with files that you've
+
+02:02.640 --> 02:05.200
+stored inside a jar file.
+
+02:05.430 --> 02:11.500
+And that would be how it would usually work with a text with any kind of be resolved source text file
+
+02:11.500 --> 02:15.120
+or graphic image or whatever inside a jar file.
+
+02:15.210 --> 02:20.910
+I would put it in this resource directory and then it becomes part of the jar file and then I can read
+
+02:20.910 --> 02:22.830
+it in his results.
+
+02:22.830 --> 02:28.170
+Now I've never found out a way of doing that using this text file method.
+
+02:28.560 --> 02:34.280
+Basically because the text file method just takes in a string which is a path.
+
+02:34.290 --> 02:41.160
+Now the reason for this I think is just that the assumption of the spot design is that this is going
+
+02:41.160 --> 02:49.140
+to be a file if it's not a local file on the file system that why the be a dupe file system file or
+
+02:49.140 --> 02:52.650
+something like an Amazon S3 file.
+
+02:53.530 --> 02:59.740
+So what I would rather do rather than trying to hack this is I think we should cut to the chase really
+
+03:00.030 --> 03:08.360
+and make sure our input file is stored on S3 and we do that by simply using an S-3 you rl.
+
+03:08.530 --> 03:17.450
+It's a bit strange it's actually three 10 call on slash forward slash on the S3 and I think it's just
+
+03:17.450 --> 03:25.960
+the new generation of S3 you are else this style of you Arel has more features than the original S3
+
+03:25.960 --> 03:27.990
+Colan version.
+
+03:28.030 --> 03:32.500
+Now if you're following along with me what I will need you to do is to create a booklet for yourself
+
+03:32.620 --> 03:36.440
+in Amazon S3 called anything you like.
+
+03:36.700 --> 03:41.190
+I'm gonna call mine the P-P SPARC demos.
+
+03:41.290 --> 03:48.400
+You can call yours that because this has to be a globally unique name that has never been used before
+
+03:48.880 --> 03:53.210
+in Amazon S3 across the whole of the world.
+
+03:53.710 --> 04:01.950
+So just to show you if I go to my aid us console walloping talking yet these are still bootstrapping
+
+04:02.230 --> 04:04.080
+it's still plenty of time.
+
+04:04.240 --> 04:11.320
+I can follow the link here in a new tab to S-3 console they've improved this console dramatically since
+
+04:11.320 --> 04:19.810
+I last recorded of course so it's much usable now this so just drilled into my Wii people spark demos
+
+04:19.810 --> 04:22.450
+pockets and off camera.
+
+04:22.450 --> 04:23.500
+I won't bore you with this.
+
+04:23.500 --> 04:28.990
+I've uploaded the input that he XTi file to hear this.
+
+04:29.000 --> 04:36.190
+I am old at 64 by the way is just multi-gigabyte file that I carry around with me on a U.S. dick.
+
+04:36.250 --> 04:41.390
+Just for stress testing and doing basic benchmarking.
+
+04:41.470 --> 04:48.130
+That felt kind of big enough to give me long running jobs on my cluster's without them just immediately
+
+04:48.460 --> 04:49.120
+finishing.
+
+04:49.120 --> 04:51.840
+Like probably this file is going to do.
+
+04:51.940 --> 04:57.760
+You don't need that file but I might use it in the chapter on performance and when we've got the input
+
+04:57.760 --> 05:06.190
+dot 65 in place and in the code we can refer to it just like that.
+
+05:06.530 --> 05:08.530
+So this is getting a lot more realistic now.
+
+05:08.540 --> 05:14.020
+This input dot 64 could be a multi terabyte file on just three.
+
+05:14.120 --> 05:18.470
+And of course samisen will be storing that across multiple disks.
+
+05:18.500 --> 05:19.670
+We don't care about that.
+
+05:19.670 --> 05:21.980
+It will feel like a single file.
+
+05:21.980 --> 05:24.920
+It will not be read into a single virtual machine.
+
+05:25.130 --> 05:26.560
+When we read this in.
+
+05:26.630 --> 05:30.180
+Actually it's going to be read in by our cluster.
+
+05:30.350 --> 05:33.250
+So Hogarth's been clear so far.
+
+05:33.460 --> 05:38.360
+I think that's the only changes that we need to make to our code.
+
+05:38.840 --> 05:43.940
+So we're going to need to distribute this to our cluster today so we're going to build this as a jar
+
+05:43.940 --> 05:44.840
+file.
+
+05:45.100 --> 05:47.360
+So to do that we'll run the pundit.
+
+05:47.390 --> 05:48.360
+SML.
+
+05:48.560 --> 05:55.970
+Oh by the way before I do that inside the palm dot SML you'll just need to check on it looks like line
+
+05:55.970 --> 06:01.530
+55 line 55 has the name of the main class that we're running.
+
+06:01.700 --> 06:03.020
+So check that carefully.
+
+06:03.020 --> 06:10.610
+You might have a different package and a different main class if that same place then we'll run the
+
+06:10.610 --> 06:18.680
+palm and the goal we're looking for is the package go which is going to build that as a jar file learning
+
+06:18.860 --> 06:24.110
+Sparc and of course if we are doing this in real life we would have this part of some kind of deployment
+
+06:24.110 --> 06:32.090
+system probably integrated into Jenkin's or something similar but we're taking baby steps so I'm suggesting
+
+06:32.090 --> 06:35.230
+we'll just going to manually upload that file.
+
+06:35.570 --> 06:39.020
+So here I am in my projects target directory.
+
+06:39.080 --> 06:43.160
+That's the job file right there and will get the uploaded.
+
+06:43.340 --> 06:51.480
+Actually before I can send you I should mention that this file is eleven point eight megabytes.
+
+06:51.500 --> 06:53.460
+I've opened it up here and is a utility.
+
+06:53.460 --> 07:00.410
+Actually the size of it comes purely from the fact that I have packaged some practical files for later
+
+07:00.410 --> 07:05.510
+on in the course insert here including the input that takes the fall even though we're not going to
+
+07:05.510 --> 07:06.790
+be reading that.
+
+07:06.980 --> 07:09.020
+So I didn't really need those.
+
+07:09.050 --> 07:12.760
+And actually the real size of the jar file would be a lot smaller.
+
+07:12.800 --> 07:19.530
+Now what I really want to point out is this job file does not contain the spark distribution.
+
+07:19.640 --> 07:30.620
+It only contains our code and that's absolutely fine because the Amazon E M R has got all of the spark
+
+07:30.650 --> 07:35.590
+code installed locally so we don't need to deploy SPARC.
+
+07:35.600 --> 07:37.940
+It's already there on our cluster.
+
+07:38.180 --> 07:41.450
+OK so I'll just click next and that showed.
+
+07:41.470 --> 07:47.880
+In fact I can just go straight to upload that I'll take just a few seconds to upload the file to that
+
+07:47.880 --> 07:48.700
+book.
+
+07:48.840 --> 07:55.670
+So the idea of putting it in this S-3 book is I'll be able to easily download it to our cluster that
+
+07:55.680 --> 07:58.020
+is at least when the clusters finally started.
+
+07:58.020 --> 08:03.480
+So you know while I've been talking good timing the cluster is now up and running.
+
+08:03.680 --> 08:05.910
+It's quite easy to work with these clusters.
+
+08:05.910 --> 08:14.130
+What we've got here is a massive public DNS which is going to points to the IP address of this of the
+
+08:14.130 --> 08:17.270
+master node in our cluster.
+
+08:17.280 --> 08:25.620
+So my regular terminal now can use S-sh as normal using my keypad file to log on to this instance.
+
+08:25.620 --> 08:27.470
+The one thing you need to know.
+
+08:27.570 --> 08:29.980
+Again I'm assuming you know how to do this.
+
+08:30.000 --> 08:33.860
+We covered this on the original AWOS course.
+
+08:33.960 --> 08:41.570
+The one thing you need to know is that the user name is a dupe and not the usual ECAC dash user.
+
+08:41.570 --> 08:44.380
+And that's going to be Hadoop at.
+
+08:44.630 --> 08:53.100
+Oh that didn't work because I thought I had the DNS name on the clipboard so go back to here and I'll
+
+08:53.100 --> 08:54.860
+try to copy that again.
+
+08:55.110 --> 08:57.360
+Ok that's better this time.
+
+08:57.360 --> 09:07.250
+Now the usual deal with AWOS I'm guessing by default the firewall is not open on the on the S-sh ports.
+
+09:07.280 --> 09:09.460
+That certainly looks like it's hanggang.
+
+09:09.650 --> 09:15.470
+So back to the console and you'll find down here on the page for the cluster.
+
+09:15.660 --> 09:22.710
+There's security groups for master and security groups for core and TASC only to follow the link to
+
+09:22.770 --> 09:25.180
+security groups for master.
+
+09:25.200 --> 09:31.440
+And then I have to select master again here as always the interface may have changed for you by the
+
+09:31.440 --> 09:35.190
+time you do this but hopefully it's relatively similar.
+
+09:35.190 --> 09:36.860
+Click on the outbound tab.
+
+09:36.880 --> 09:42.300
+I'm going to edit the firewall rules don't change any of these existing entries.
+
+09:42.300 --> 09:48.810
+You'll notice it's put in a lot of entries for port eight full for three for a variety of IP addresses.
+
+09:48.810 --> 09:55.830
+You probably don't recognize these IP addresses are actually the executive nodes that I've been working
+
+09:55.830 --> 09:56.950
+with earlier.
+
+09:57.090 --> 09:59.770
+It just happens to put entries in for them.
+
+10:00.090 --> 10:08.120
+I know I need to add a rule for port twenty two and I'm going to make it just my IP address.
+
+10:08.130 --> 10:12.440
+We also need to add in a rule for ports.
+
+10:12.460 --> 10:13.750
+This is an odd one.
+
+10:13.920 --> 10:16.880
+1 8 8.
+
+10:17.040 --> 10:21.830
+And again I'll just open that for my IP and we'll find out what that's all about.
+
+10:21.840 --> 10:23.540
+A little bit later on.
+
+10:23.700 --> 10:25.160
+Click on Save.
+
+10:25.410 --> 10:32.160
+Now I can go back to the console and I'll try the S-sh again oh by the way I always forget this.
+
+10:32.240 --> 10:34.290
+You might need to do.
+
+10:34.380 --> 10:35.900
+I can never remember.
+
+10:35.930 --> 10:43.670
+I can never remember the exact settings but you can certainly get away with doing a chmod of group and
+
+10:43.760 --> 10:54.560
+all of those minus all W X on file and that will remove read write and execute privileges for everybody
+
+10:54.560 --> 11:02.910
+other than yourself think that's satisfactory I should now be able to run the SH confirmed that I want
+
+11:02.910 --> 11:07.190
+to add it to my key chain and there you are.
+
+11:07.200 --> 11:09.890
+You are now locked in to your e.
+
+11:09.960 --> 11:13.050
+And our master instance.
+WEBVTT
+
+00:00.580 --> 00:01.960
+Well what can we do in here.
+
+00:01.960 --> 00:09.550
+Well we'll find it's just an empty instance you you're in a folder called home Hadoop and there's nothing
+
+00:09.550 --> 00:10.400
+in there.
+
+00:10.750 --> 00:16.900
+Well what we're going to need of course is our job file so we can get out very easily because by default
+
+00:16.900 --> 00:26.740
+on these instances we have the last command pre-configured so we can use Anable us S-3 the copy command
+
+00:26.940 --> 00:28.740
+than the rest of your book.
+
+00:28.810 --> 00:39.700
+Which for me was S-3 colon slash slash BPP dash spark dash demos forward slash and then the name of
+
+00:39.700 --> 00:48.490
+the jar file was forgotten already looking in S3 S-3 Well it is quite quite a long awkward name this
+
+00:48.560 --> 00:58.370
+actually so I think I'm going to rename that to just what scope for spark top jaw.
+
+00:58.520 --> 01:00.780
+That just makes it easy for me here.
+
+01:01.810 --> 01:09.070
+Should I always forget that that didn't work because after that I need to specify which directory I'm
+
+01:09.070 --> 01:09.980
+copying into.
+
+01:10.000 --> 01:15.400
+Which just means of full stop great That's not downloaded.
+
+01:15.540 --> 01:18.590
+So I have my job file here locally.
+
+01:18.720 --> 01:27.120
+All you need to do to run a spark job on the cluster is to use a script that comes with the spark distribution
+
+01:27.370 --> 01:28.510
+to Eclipso.
+
+01:28.590 --> 01:29.700
+Get rid of all that rubbish.
+
+01:29.700 --> 01:32.760
+The script is called Spark dash.
+
+01:32.950 --> 01:34.190
+Submit.
+
+01:34.940 --> 01:36.200
+All you have to do.
+
+01:36.210 --> 01:42.090
+You can specify a lost command line arguments here to specify things such as how much memory do you
+
+01:42.090 --> 01:43.450
+want to use.
+
+01:43.470 --> 01:47.770
+How many executive threads do you want to use and so on and so forth.
+
+01:47.890 --> 01:53.110
+But actually for us at least when we're just trying things out the defaults will suffice.
+
+01:53.190 --> 01:57.500
+So we have to do is give the name of the jar file that we're running.
+
+01:57.570 --> 02:05.010
+Now these m one medium instances are actually really slow and probably actually slower than the very
+
+02:05.010 --> 02:07.470
+basic PC that I've been recording on.
+
+02:07.470 --> 02:10.980
+So don't be surprised that this is running slow.
+
+02:11.520 --> 02:16.800
+If we used one of those more expensive instances then this would have been a lot lot faster.
+
+02:17.010 --> 02:23.370
+And actually the startup time is quite slow so I'll probably add it's a little bit of the dead time
+
+02:23.370 --> 02:27.990
+out of here but even so I'm waffling.
+
+02:27.990 --> 02:29.750
+It is taking a while.
+
+02:29.790 --> 02:37.500
+You can ignore this warning about Sparke don't you on jobs but eventually I did and it there is a few
+
+02:37.500 --> 02:41.060
+minutes out it's about a minute in fight.
+
+02:41.190 --> 02:46.280
+Eventually we will see our job executing on the cluster.
+
+02:46.320 --> 02:52.170
+Something's happening so you can tell from those time stamps that it was about a minute and here we
+
+02:52.170 --> 02:53.960
+are is now executing.
+
+02:54.270 --> 03:00.720
+I'll be explaining what the stages are all about in the Champs keep promising human performance
+
+03:04.340 --> 03:11.720
+so a few seconds once the job was running but we are seeing on our cluster soc Tanky what exactly is
+
+03:11.720 --> 03:13.720
+required now.
+
+03:13.910 --> 03:17.780
+I don't know how impressive that demonstration was to you.
+
+03:17.780 --> 03:21.980
+I don't know if you even believe me that it ran on a cluster.
+
+03:21.980 --> 03:27.760
+Now as luck would have it I still have that DNS name that I copied to my clipboard.
+
+03:27.800 --> 03:31.580
+If you don't and you're following along you'll find it only EMR console.
+
+03:31.580 --> 03:39.530
+Remember under most public DNS and if you copy that into a browser and use the port number.
+
+03:39.530 --> 03:40.860
+Do you remember this.
+
+03:40.860 --> 03:41.960
+Gone.
+
+03:42.100 --> 03:43.080
+AC.
+
+03:43.180 --> 03:46.670
+AC then you're going to find a very useful
+
+03:49.410 --> 03:56.760
+history server it will show you a list of all the spark applications that have completed and you won't
+
+03:56.760 --> 04:00.000
+find any interest in here while your job is running.
+
+04:00.000 --> 04:02.930
+It's only once they've completed.
+
+04:03.630 --> 04:10.400
+But we can get lots and I really do mean lots of diagnostics about what's been going on on this job.
+
+04:10.680 --> 04:17.420
+But supposedly the first key metric that we have here is the generation of the job formate.
+
+04:17.430 --> 04:25.770
+It took one point six minutes for drilling Sahaja is actually quite scary at this console and it can
+
+04:25.770 --> 04:29.610
+be very difficult to read and understand what's going on.
+
+04:29.610 --> 04:36.720
+Again this chapter that I keep promising you on performance we'll be drilling down into a bit more detail
+
+04:37.380 --> 04:39.080
+when we get to that chapter.
+
+04:39.270 --> 04:45.980
+But for now I just want to poke around here a little bit and show you for example on these executives
+
+04:45.980 --> 04:50.300
+pay each all x Akitas if you prefer.
+
+04:50.730 --> 04:54.330
+I do want to show you that we did have a cluster.
+
+04:54.420 --> 04:57.130
+We had three active notes.
+
+04:57.570 --> 05:00.100
+And here is a breakdown of those nodes.
+
+05:00.120 --> 05:06.920
+One was the driver and then we had executed Number one an executive number two.
+
+05:07.260 --> 05:14.610
+And actually yes unfortunately because the job the input file was just simply not big enough.
+
+05:14.730 --> 05:22.710
+We can actually find out from here that in fact all of the work was done on executive number two.
+
+05:22.860 --> 05:27.280
+In fact the executive number one was sat idle and doing nothing.
+
+05:27.580 --> 05:31.830
+Well that's probably not a surprise to you we were doing a small data job.
+
+05:32.130 --> 05:37.240
+I hope you get the principle that we were running on a cluster.
+
+05:37.260 --> 05:42.630
+Now if you don't believe me if you think I've kind of got something wrong in my code here which means
+
+05:42.630 --> 05:46.540
+that only one node was ever going to do any work.
+
+05:46.830 --> 05:48.510
+What I will do is learn.
+
+05:48.510 --> 05:50.600
+I'll use my A-Whale Dotsie x.
+
+05:50.610 --> 05:55.860
+The follow up system I've no idea why I call it a L It's a historical thing really.
+
+05:56.040 --> 05:58.090
+It's not a very exciting file.
+
+05:58.110 --> 06:05.190
+It's just a few text books from the Gottenburg project that are jammed together and then repeats it
+
+06:05.190 --> 06:08.850
+several times until I got up to 2 gigabytes.
+
+06:08.850 --> 06:15.190
+So it's perhaps not a very realistic data file but it is good for this sort of exercise.
+
+06:15.190 --> 06:17.940
+I can easily give you this file.
+
+06:18.030 --> 06:23.850
+It's too big to pull on to our Web sites unfortunately but you can easily make one for yourself if you
+
+06:23.850 --> 06:24.740
+want.
+
+06:24.750 --> 06:28.160
+So I'm going to rerun the building of the jar file.
+
+06:30.180 --> 06:39.240
+And then back here on the M.A. just to be safe I'm going to remove this job file so I know I'm definitely
+
+06:39.240 --> 06:46.400
+not using the old version the new versions now but it's now back in S-3.
+
+06:46.490 --> 06:49.310
+I'll delete the jar file on S-3
+
+06:52.560 --> 06:54.270
+and then upload again.
+
+06:56.580 --> 06:59.850
+And this is my new job file.
+
+06:59.850 --> 07:01.260
+Just check the time stamp.
+
+07:01.510 --> 07:04.120
+This is the one I've just created.
+
+07:04.120 --> 07:05.900
+So let's get that uploaded.
+
+07:08.450 --> 07:18.440
+So we're going to be using this 2.8 gigabyte file now and again rename this just to be absolutely safe.
+
+07:18.440 --> 07:21.020
+Lindsey call it sparked to Dopp jaw.
+
+07:21.250 --> 07:25.360
+The reason for that is of course when you doing this manual up loading it's very easy to accidentally
+
+07:25.360 --> 07:29.440
+forget to a data file and you wonder why nothing's changed.
+
+07:29.680 --> 07:38.350
+So back in the cluster then I will run start rerun mice Baalke submit but this time on sparc to dot
+
+07:38.520 --> 07:39.640
+jaw.
+
+07:40.060 --> 07:48.670
+And of course there is no jar file in this folder and it's a record the download.
+
+07:48.670 --> 07:54.410
+So some will be downloading the spark to the jar file from S-3 and there it is.
+
+07:54.420 --> 08:00.010
+And now this time I can do the sparks of mix of my new job file.
+
+08:00.010 --> 08:05.950
+Now because this is a two point eight gigabyte file it does take quite a long time to run this job on
+
+08:05.950 --> 08:13.210
+the medium on the end one medium instances even when I've got two of them working in parallel.
+
+08:13.210 --> 08:16.000
+It takes about nine minutes in general for me.
+
+08:16.000 --> 08:21.540
+So I'm going to go away and have a cup of tea and when I can but hopefully the job will be done.
